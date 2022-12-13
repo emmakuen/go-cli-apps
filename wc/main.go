@@ -9,19 +9,19 @@ import (
 )
 
 func main() {
-	countLines := flag.Bool("l", false, "Count lines")
-	countBytes := flag.Bool("p", false, "Count bytes")
+	shouldCountLines := *flag.Bool("l", false, "Count lines")
+	shouldCountBytes := *flag.Bool("p", false, "Count bytes")
 	flag.Parse()
 
-	fmt.Println(count(os.Stdin, *countLines, *countBytes))
+	fmt.Println(count(os.Stdin, shouldCountLines, shouldCountBytes))
 }
 
-func count(reader io.Reader, countLines bool, countBytes bool) int {
+func count(reader io.Reader, shouldCountLines bool, shouldCountBytes bool) int {
 	scanner := bufio.NewScanner(reader)
 
-	if !countLines && !countBytes {
+	if !shouldCountLines && !shouldCountBytes {
 		scanner.Split(bufio.ScanWords)
-	} else if countBytes {
+	} else if shouldCountBytes {
 		scanner.Split(bufio.ScanBytes)
 	}
 
